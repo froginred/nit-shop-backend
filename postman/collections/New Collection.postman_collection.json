@@ -1,0 +1,939 @@
+{
+  "info": {
+    "_postman_id": "04ae6aee-c2e6-41f0-9ec6-11dc97c3953a",
+    "name": "SHOP Backend (Updated)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Register",
+          "id": "9d702eb8-e11e-4d22-a5cb-68e612170269",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"first_name\": \"Nitsan\",\r\n  \"last_name\": \"Salton\",\r\n  \"email\": \"nitsan@email.com\",\r\n  \"phone\": \"050-0000000\",\r\n  \"address\": \"Tel Aviv\",\r\n  \"username\": \"nitsan\",\r\n  \"password\": \"1234\",\r\n  \"role\": \"ADMIN\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "id": "0d839aa6-b119-4f4b-9791-19e03df9e71b",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"nitsal\",\r\n  \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/authenticate",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "authenticate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7cdf07ba-bf7b-44f7-89a4-0c86eb63a31a",
+              "name": "authenticate",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"nitsan\",\r\n  \"password\": \"1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/authenticate",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "authenticate"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 31 Jan 2026 15:12:03 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-31T15:12:24.385Z",
+              "body": "{\n    \"jwt\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaXRzYW4iLCJyb2xlcyI6WyJVU0VSIl0sImV4cCI6MTc2OTkwODMyMywiaWF0IjoxNzY5ODcyMzIzfQ.DO9eYuru9QtXWfd8nNm1je8mL2Kk4jy8twuJqlQvgRo\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Save JWT token', function () {",
+                  "  var jsonData = pm.response.json();",
+                  "  pm.collectionVariables.set('token', jsonData.jwt);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin GET all users",
+          "id": "a33e8b5d-d688-4907-9daf-17b3e89eeefa",
+          "request": {
+            "auth": {
+              "type": "digest",
+              "digest": [
+                {
+                  "key": "algorithm",
+                  "value": "MD5",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaXRzYWwiLCJyb2xlcyI6WyJBRE1JTiJdLCJleHAiOjE3Njk5MDkzNTIsImlhdCI6MTc2OTg3MzM1Mn0.MoBP_DXSY8i-K-3FJUILRsWcNkbpDagE1bdle5QoP9M",
+                "type": "text",
+                "uuid": "96f6d41b-4f6a-432b-b54d-a8111bf4e070"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:9000/admin/all-users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "admin",
+                "all-users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET user by username",
+          "id": "f27139ac-66ef-4a5c-a5f1-0b8b7606b679",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"nitsan\",\r\n  \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/users?Authorization=Bearer",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer",
+                  "type": "text",
+                  "uuid": "f9062647-a31e-4d11-a518-10a57f002d9f"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete user",
+          "id": "081fb350-53c8-4b1d-b9db-dd7d05bb862a",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"nitsan\",\r\n  \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Delete user",
+          "id": "16db7f76-d600-4d3f-8903-28ec4c7b5a46",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"nitsan\",\r\n  \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/admin/delete-user/?Authorization=Bearer",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "admin",
+                "delete-user",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer",
+                  "uuid": "5ec330b2-cb7e-47b5-b9ea-24429cbc3eeb"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update user",
+          "id": "8a08c4cc-bfdd-4e9a-b003-a7d4ec62f26e",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer",
+                "type": "text",
+                "uuid": "540f0c54-699c-496f-9f34-a3eba04b7e4b"
+              },
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "uuid": "49defd45-ecfd-4f02-b4ed-ea7a41b0010d",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"first_name\": \"NewFirst\",\r\n  \"last_name\": \"NewLast\",\r\n  \"email\": \"new@email.com\",\r\n  \"phone\": \"050-1111111\",\r\n  \"address\": \"Jerusalem\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Copy",
+          "id": "b142eb26-8304-46be-8268-046ff185107e",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"nitsan\",\r\n  \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/authenticate",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "authenticate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "68bc671d-6438-42a2-b9c2-8ef098946d09",
+              "name": "authenticate",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"nitsan\",\r\n  \"password\": \"1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/authenticate",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "authenticate"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 31 Jan 2026 15:12:03 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-31T15:12:24.385Z",
+              "body": "{\n    \"jwt\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaXRzYW4iLCJyb2xlcyI6WyJVU0VSIl0sImV4cCI6MTc2OTkwODMyMywiaWF0IjoxNzY5ODcyMzIzfQ.DO9eYuru9QtXWfd8nNm1je8mL2Kk4jy8twuJqlQvgRo\"\n}"
+            }
+          ]
+        }
+      ],
+      "id": "d6c6213e-ce1b-43e2-b30e-b4cea8874ef8"
+    },
+    {
+      "name": "Items",
+      "item": [
+        {
+          "name": "GET all items",
+          "id": "eac6f012-0738-474e-b94c-60f7f76104d7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/items",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "items"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET item by id",
+          "id": "117c0bcc-c389-46fd-9ae1-e8e076b7f817",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/items/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "items",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search items",
+          "id": "d5f5c34f-1012-4ef0-962b-3bdb9905c9ae",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/items/search?q=sun",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "items",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "sun"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Favorites",
+      "item": [
+        {
+          "name": "Add favorite",
+          "id": "c906080a-ab1f-4dff-b3ab-fe0e00e1e480",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/favorites/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "favorites",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List favorites",
+          "id": "9f8f66a2-ad9c-457a-807a-93028e421838",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/favorites",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "favorites"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove favorite",
+          "id": "7ca936c2-4947-431a-93b2-9b16129a1a6f",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/favorites/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "favorites",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cart & Orders",
+      "item": [
+        {
+          "name": "Add to cart",
+          "id": "6d8f9088-a9e2-4c3f-80f1-725e04e336c1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/cart/items?itemId=1&quantity=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                "cart",
+                "items"
+              ],
+              "query": [
+                {
+                  "key": "itemId",
+                  "value": "1"
+                },
+                {
+                  "key": "quantity",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "View cart",
+          "id": "1f244822-a9b7-4065-b4d9-0654e365cfa7",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/cart",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove from cart",
+          "id": "e7b98ac4-7e2a-48c6-8b0b-8c26c4bfd75b",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/cart/items/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                "cart",
+                "items",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Checkout",
+          "id": "481c990f-d8b6-4035-94ca-7fc177c82ef1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/checkout?shippingAddress=Tel%20Aviv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                "checkout"
+              ],
+              "query": [
+                {
+                  "key": "shippingAddress",
+                  "value": "Tel%20Aviv"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List my orders",
+          "id": "8f0cc17a-c80d-43b2-a2c5-61f826232c3d",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Order details",
+          "id": "a9684e10-07d8-4a84-afd4-dcf49ccfc1a9",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                "1"
+              ]
+            },
+            "description": "Change the order id in the URL to a real order id from 'List my orders'."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin Items CRUD",
+      "item": [
+        {
+          "name": "ADMIN create item",
+          "id": "66d40477-a356-4e4b-933b-4d6379ff6297",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/items",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "items"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"item_category\": \"GENERAL\",\n  \"title\": \"New Item\",\n  \"description\": \"Created from Postman\",\n  \"image_url\": \"https://picsum.photos/200\",\n  \"price\": 19.99,\n  \"stock\": 10\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN update item",
+          "id": "432831ad-5698-4222-8bb4-98fbd964bf15",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/items/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "items",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"item_category\": \"GENERAL\",\n  \"title\": \"Updated title\",\n  \"description\": \"Updated desc\",\n  \"image_url\": \"https://picsum.photos/200\",\n  \"price\": 29.99,\n  \"stock\": 15\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN update stock",
+          "id": "7c4260c9-2068-444f-83a9-b094d41fd80a",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/items/1/stock?stock=50",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "items",
+                "1",
+                "stock"
+              ],
+              "query": [
+                {
+                  "key": "stock",
+                  "value": "50"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN delete item",
+          "id": "54799c4c-9460-43c3-b936-ac42138bce73",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/items/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "items",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}
